@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function PublicNavbar() {
   const [open, setOpen] = useState(false)
@@ -26,18 +27,23 @@ export default function PublicNavbar() {
             <Link href="#pricing" className="text-gray-600 hover:text-gray-900">
               Pricing
             </Link>
-            <Link
-              href="/login"
-              className="rounded-md border px-3 py-1.5 text-gray-700 hover:bg-gray-50"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/register"
-              className="rounded-md bg-black px-3 py-1.5 text-white hover:bg-gray-800"
-            >
-              Get started
-            </Link>
+            <SignedOut>
+              <Link
+                href="/login"
+                className="rounded-md border px-3 py-1.5 text-gray-700 hover:bg-gray-50"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="rounded-md bg-black px-3 py-1.5 text-white hover:bg-gray-800"
+              >
+                Get started
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </nav>
 
           {/* Mobile toggle */}
@@ -62,15 +68,22 @@ export default function PublicNavbar() {
             <Link href="#pricing" className="block text-gray-700">
               Pricing
             </Link>
-            <Link href="/login" className="block text-gray-700">
-              Log in
-            </Link>
-            <Link
-              href="/register"
-              className="block rounded-md bg-black px-3 py-2 text-white text-center"
-            >
-              Get started
-            </Link>
+            <SignedOut>
+              <Link href="/login" className="block text-gray-700">
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="block rounded-md bg-black px-3 py-2 text-white text-center"
+              >
+                Get started
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <div className="flex justify-center">
+                <UserButton />
+              </div>
+            </SignedIn>
           </div>
         )}
       </div>

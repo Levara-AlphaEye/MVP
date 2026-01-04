@@ -1,4 +1,5 @@
 import PublicNavbar from "@/components/layout/PublicNavbar"
+import { ClerkProvider } from '@clerk/nextjs'
 import "./globals.css"
 
 export default function RootLayout({
@@ -7,11 +8,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <PublicNavbar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body>
+          <PublicNavbar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
