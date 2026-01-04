@@ -1,4 +1,4 @@
-import PublicNavbar from "@/components/layout/PublicNavbar"
+import NavbarWrapper from "@/components/layout/NavbarWrapper"
 import { ClerkProvider } from '@clerk/nextjs'
 import "./globals.css"
 
@@ -8,10 +8,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      afterSignInUrl="/dashboard"
+      afterSignUpUrl="/dashboard"
+    >
       <html lang="en">
         <body>
-          <PublicNavbar />
+          <NavbarWrapper />
           {children}
         </body>
       </html>

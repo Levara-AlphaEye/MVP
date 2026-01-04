@@ -13,7 +13,7 @@ export default function PublicNavbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="text-lg font-semibold">
-            AlphaEye
+            Alpha Eye
           </Link>
 
           {/* Desktop nav */}
