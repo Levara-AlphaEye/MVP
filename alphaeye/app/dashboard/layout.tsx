@@ -1,4 +1,4 @@
-import DashboardNavbar from "@/components/layout/DashboardNavbar"
+import DashboardSidebar from "../../components/layout/DashboardSidebar"
 
 export default function DashboardLayout({
   children,
@@ -6,11 +6,27 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <DashboardNavbar />
-      <main className="mx-auto max-w-7xl px-4 py-8">
-        {children}
-      </main>
-    </>
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex">
+        {/* Left sidebar (hidden on small screens) */}
+        <DashboardSidebar />
+
+        {/* Main content column */}
+        <div className="flex-1 min-h-screen flex flex-col">
+
+          {/* Main area with grid wrapper for pages */}
+          <main className="flex-1 p-6">
+            <div className="mx-auto max-w-7xl">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+                {/* By default pages will occupy full width; inner content can use the grid */}
+                <div className="md:col-span-12">
+                  {children}
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
   )
 }
