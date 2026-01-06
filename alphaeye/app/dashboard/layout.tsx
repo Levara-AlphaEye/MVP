@@ -1,5 +1,5 @@
 import DashboardSidebar from "../../components/layout/DashboardSidebar"
-import DashboardContentWrapper from "../../components/layout/DashboardContentWrapper"
+import DashboardTopHeader from "../../components/layout/DashboardTopHeader"
 
 export default function DashboardLayout({
   children,
