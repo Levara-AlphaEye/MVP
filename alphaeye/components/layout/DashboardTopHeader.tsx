@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useUploadDeck } from "../UploadDeckContext"
 
 export default function DashboardTopHeader() {
   const [version, setVersion] = useState("v1.0")
+  const { openModal } = useUploadDeck()
 
   return (
     <div className="mb-6">
@@ -31,6 +33,7 @@ export default function DashboardTopHeader() {
           <div className="text-sm text-gray-600">Welcome back — choose a deck to start analysis</div>
           <button
             type="button"
+            onClick={openModal}
             className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700"
           >
             Upload deck

@@ -1,13 +1,16 @@
-import { currentUser } from "@clerk/nextjs/server";
+'use client';
 
-export default async function Dashboard() {
-  const user = await currentUser();
+import { UploadDeckModal } from '../../components/UploadDeckModal';
+import { useUploadDeck } from '../../components/UploadDeckContext';
+
+export default function Dashboard() {
+  const { isModalOpen, closeModal } = useUploadDeck();
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">Welcome back, {user?.firstName || 'User'}!</h1>
-        <p className="text-gray-600 mt-2">Here's what's happening with your account today.</p>
+        <h1 className="text-3xl font-bold">Welcome back, User!</h1>
+        <p className="text-gray-600 mt-2">Here&apos;s what&apos;s happening with your account today.</p>
       </div>
 
       {/* 12-column overview grid */}
@@ -48,6 +51,11 @@ export default async function Dashboard() {
           </div>
         </div>
       </div>
+
+      <UploadDeckModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 }
