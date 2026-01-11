@@ -3,14 +3,40 @@
 import { useState } from "react"
 import { useUploadDeck } from "../UploadDeckContext"
 
-export default function DashboardTopHeader() {
+export default function DashboardTopHeader({
+  collapsed,
+  onToggleCollapse,
+}: {
+  collapsed?: boolean
+  onToggleCollapse?: () => void
+}) {
   const [version, setVersion] = useState("v1.0")
   const { openModal } = useUploadDeck()
 
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between bg-white p-4 rounded-md shadow-sm">
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center space-x-4">
+          {/* Toggle button for collapsing sidebar - visible on md+ screens */}
+          <button
+            type="button"
+            aria-label={collapsed ? 'Open sidebar' : 'Collapse sidebar'}
+            aria-expanded={!collapsed}
+            onClick={onToggleCollapse}
+            className="hidden md:inline-flex items-center justify-center h-8 w-8 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            {/* simple hamburger / chevron icon that toggles */}
+            {collapsed ? (
+              <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M6 4a1 1 0 011.707-.707L12.414 8l-4.707 4.707A1 1 0 116 12.586L8.586 10 6 7.414A1 1 0 016 4z" clipRule="evenodd" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M3 5h14a1 1 0 100-2H3a1 1 0 100 2zm14 6H3a1 1 0 100 2h14a1 1 0 100-2zm0 6H3a1 1 0 100 2h14a1 1 0 100-2z" />
+              </svg>
+            )}
+          </button>
+
           <div className="text-lg font-semibold">Startup Name (placeholder)</div>
 
           <div>

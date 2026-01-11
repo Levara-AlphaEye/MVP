@@ -27,17 +27,27 @@ function IconPlaceholder({ active }: { active?: boolean }) {
   )
 }
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ collapsed }: { collapsed?: boolean }) {
   const pathname = usePathname() || ""
+  const isCollapsed = !!collapsed
+
+  // width classes: when collapsed use a narrow width on md screens, else full width
+  const widthClass = isCollapsed ? 'md:w-20' : 'md:w-64'
 
   return (
     // fixed width on md+ screens, hidden on small screens
-    <aside className="hidden md:flex md:w-64 md:flex-col md:py-6 md:px-4 bg-white border-r">
+    <aside className={`hidden md:flex ${widthClass} md:flex-col md:py-6 md:px-4 bg-white border-r transition-all duration-200`}>
       <div className="flex flex-col h-full">
         <div className="px-2 mb-4">
-          <Link href="/dashboard" className="text-lg font-semibold">
+          <Link href="/dashboard" className={`text-lg font-semibold ${isCollapsed ? 'hidden' : ''}`}>
             Dashboard
           </Link>
+          {/* when collapsed show a compact logo/text */}
+          {isCollapsed && (
+            <div className="flex items-center justify-center h-8">
+              <span className="text-sm font-semibold">DA</span>
+            </div>
+          )}
         </div>
 
         <nav className="flex-1 px-2 space-y-1 text-sm" aria-label="Sidebar">
@@ -59,8 +69,10 @@ export default function DashboardSidebar() {
                 }`}
                 aria-current={active ? 'page' : undefined}
               >
-                <IconPlaceholder active={active} />
-                <span className="truncate">{item.label}</span>
+                <div className="flex items-center justify-center w-6">
+                  <IconPlaceholder active={active} />
+                </div>
+                <span className={`${isCollapsed ? 'hidden' : 'truncate ml-3'}`}>{item.label}</span>
               </Link>
             )
           })}
