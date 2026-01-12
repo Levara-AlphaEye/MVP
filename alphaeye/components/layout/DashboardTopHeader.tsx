@@ -17,22 +17,8 @@ export default function DashboardTopHeader({
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between bg-white p-4 rounded-md shadow-sm">
-        <div className="flex items-center space-x-4">
-          {/* Toggle button for collapsing sidebar - visible on md+ screens */}
-          <button
-            type="button"
-            aria-label={collapsed ? 'Open sidebar' : 'Collapse sidebar'}
-            aria-expanded={!collapsed}
-            onClick={onToggleCollapse}
-            className="hidden md:inline-flex items-center justify-center h-8 w-8 rounded-md text-gray-600 hover:bg-gray-100"
-          >
-            {/* simple hamburger / chevron icon that toggles */}
-            {collapsed ? (
-              <ChevronRightIcon className="h-5 w-5 block" aria-hidden />
-            ) : (
-              <Bars3Icon className="h-5 w-5 block" aria-hidden />
-            )}
-          </button>
+          <div className="flex items-center space-x-4">
+
 
           <div className="text-lg font-semibold">Startup Name (placeholder)</div>
 
