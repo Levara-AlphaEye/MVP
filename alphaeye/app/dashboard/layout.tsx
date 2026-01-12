@@ -20,8 +20,8 @@ export default function DashboardLayout({
     <UploadDeckProvider>
       <div className="min-h-screen bg-gray-50">
         <div className="flex">
-          {/* Left sidebar (hidden on small screens). Receives collapsed state */}
-          <DashboardSidebar collapsed={collapsed} />
+          {/* Left sidebar (hidden on small screens). Receives collapsed state and toggle handler */}
+          <DashboardSidebar collapsed={collapsed} onToggleCollapse={toggleCollapsed} />
 
           {/* Main content column */}
           <div className="flex-1 min-h-screen flex flex-col">

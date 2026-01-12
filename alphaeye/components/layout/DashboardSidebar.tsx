@@ -3,6 +3,18 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { SignOutButton } from "@clerk/nextjs"
+import {
+  HomeIcon,
+  DocumentTextIcon,
+  ChartBarIcon,
+  UsersIcon,
+  SparklesIcon,
+  StarIcon,
+  SpeakerWaveIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+  
+} from "@heroicons/react/24/outline"
 
 const navItems = [
   { key: "overview", label: "Overview", href: "/dashboard" },
@@ -14,20 +26,30 @@ const navItems = [
   { key: "outreach", label: "Outreach", href: "/dashboard/outreach" },
 ]
 
-function IconPlaceholder({ active }: { active?: boolean }) {
-  return (
-    <svg
-      className={`h-5 w-5 mr-3 flex-shrink-0 ${active ? 'text-indigo-600' : 'text-gray-400'}`}
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <rect width="14" height="10" x="3" y="5" rx="2" />
-    </svg>
-  )
+function NavIcon({ name, active }: { name: string; active?: boolean }) {
+  const className = `${active ? 'text-indigo-600' : 'text-gray-400'} h-5 w-5`
+
+  switch (name) {
+    case 'overview':
+      return <HomeIcon className={className} aria-hidden />
+    case 'deck-analysis':
+      return <DocumentTextIcon className={className} aria-hidden />
+    case 'funding-readiness':
+      return <ChartBarIcon className={className} aria-hidden />
+    case 'investors':
+      return <UsersIcon className={className} aria-hidden />
+    case 'improvements':
+      return <SparklesIcon className={className} aria-hidden />
+    case 'benchmarks':
+      return <StarIcon className={className} aria-hidden />
+    case 'outreach':
+      return <SpeakerWaveIcon className={className} aria-hidden />
+    default:
+      return <HomeIcon className={className} aria-hidden />
+  }
 }
 
-export default function DashboardSidebar({ collapsed }: { collapsed?: boolean }) {
+export default function DashboardSidebar({ collapsed, onToggleCollapse }: { collapsed?: boolean; onToggleCollapse?: () => void }) {
   const pathname = usePathname() || ""
   const isCollapsed = !!collapsed
 
@@ -36,7 +58,7 @@ export default function DashboardSidebar({ collapsed }: { collapsed?: boolean })
 
   return (
     // fixed width on md+ screens, hidden on small screens
-    <aside className={`hidden md:flex ${widthClass} md:flex-col md:py-6 md:px-4 bg-white border-r transition-all duration-200`}>
+    <aside className={`relative hidden md:flex ${widthClass} md:flex-col md:py-6 md:px-4 bg-white border-r transition-all duration-200`}>
       <div className="flex flex-col h-full">
         <div className="px-2 mb-4">
           <Link href="/dashboard" className={`text-lg font-semibold ${isCollapsed ? 'hidden' : ''}`}>
@@ -58,19 +80,22 @@ export default function DashboardSidebar({ collapsed }: { collapsed?: boolean })
                 ? pathname === '/dashboard' || pathname === '/dashboard/'
                 : pathname.startsWith(item.href)
 
+            // when collapsed, center the whole link so the active/bg hover sits directly behind the icon
+            const linkContentClass = isCollapsed ? 'justify-center p-2' : 'px-3 py-2'
+
             return (
               <Link
                 key={item.key}
                 href={item.href}
-                className={`group flex items-center rounded-md px-3 py-2 transition-colors ${
+                className={`group flex items-center rounded-md transition-colors ${
                   active
                     ? 'bg-gray-100 text-gray-900 font-medium'
                     : 'text-gray-700 hover:bg-gray-100'
-                }`}
+                } ${linkContentClass}`}
                 aria-current={active ? 'page' : undefined}
               >
-                <div className="flex items-center justify-center w-6">
-                  <IconPlaceholder active={active} />
+                <div className="flex items-center justify-center w-8 h-8 shrink-0 overflow-hidden">
+                  <NavIcon name={item.key} active={active} />
                 </div>
                 <span className={`${isCollapsed ? 'hidden' : 'truncate ml-3'}`}>{item.label}</span>
               </Link>
@@ -79,26 +104,73 @@ export default function DashboardSidebar({ collapsed }: { collapsed?: boolean })
         </nav>
 
         <div className="px-2 mt-4">
-          <Link href="/dashboard/settings" className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 mb-2">
-            {/* simple gear icon */}
-            <span className="inline-flex items-center">
-              <svg className="h-4 w-4 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path d="M11.3 1.046a1 1 0 00-2.6 0l-.2.586a7.002 7.002 0 00-1.518.46L5.61 1.941a1 1 0 00-1.414 1.414l.151.352c-.18.32-.333.655-.457 1.003L1.05 6.7a1 1 0 000 2l.35.141c.126.347.277.682.457 1.003l-.151.352a1 1 0 001.414 1.414l1.373-1.151c.46.206.94.372 1.434.495l.2.586a1 1 0 002.6 0l.2-.586c.494-.123.974-.29 1.434-.495l1.373 1.151a1 1 0 001.414-1.414l-.151-.352c.18-.321.333-.656.457-1.003l.35-.141a1 1 0 000-2l-.35-.141a7.002 7.002 0 00-.457-1.003l.151-.352A1 1 0 0014.39 1.94l-1.018 1.151c-.48-.201-.977-.36-1.486-.475l-.2-.57zM10 13a3 3 0 110-6 3 3 0 010 6z" />
+          {/* Settings link: show icon-only when collapsed */}
+          {isCollapsed ? (
+            <Link
+              href="/dashboard/settings"
+              className="flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 mb-2"
+              title="Settings"
+            >
+              <Cog6ToothIcon className="h-5 w-5 block text-gray-500" aria-hidden />
+            </Link>
+          ) : (
+            <Link href="/dashboard/settings" className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 mb-2">
+              <span className="inline-flex items-center">
+                <Cog6ToothIcon className="h-4 w-4 mr-2 text-gray-500" aria-hidden />
+                Settings
+              </span>
+            </Link>
+          )}
+
+          {/* Sign out button from Clerk: icon-only when collapsed */}
+          {isCollapsed ? (
+            <SignOutButton>
+              <button
+                className="flex items-center justify-center rounded-md p-2 text-red-600 hover:bg-red-50 mb-2 w-full"
+                title="Sign out"
+              >
+                <ArrowRightOnRectangleIcon className="h-5 w-5 block" aria-hidden />
+              </button>
+            </SignOutButton>
+          ) : (
+            <SignOutButton>
+              <button className="w-full text-left rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50 mb-2">
+                Sign out
+              </button>
+            </SignOutButton>
+          )}
+
+          {/* Back to site: icon when collapsed */}
+          {isCollapsed ? (
+            <Link href="/" className="flex items-center justify-center text-gray-500 hover:text-gray-700 p-2 rounded-md" title="Back to site">
+              <HomeIcon className="h-5 w-5 block" aria-hidden />
+            </Link>
+          ) : (
+            <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">
+              Back to site
+            </Link>
+          )}
+        </div>
+
+        {/* edge toggle button: visible on md+. Sits half outside the sidebar to indicate it's toggleable */}
+        <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2">
+          <button
+            type="button"
+            onClick={onToggleCollapse}
+            aria-label={isCollapsed ? 'Open sidebar' : 'Collapse sidebar'}
+            className="hidden md:inline-flex items-center justify-center h-8 w-8 rounded-full bg-white border shadow-sm text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            {/* show a chevron indicating current action */}
+            {isCollapsed ? (
+              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M7 4l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
               </svg>
-              Settings
-            </span>
-          </Link>
-
-          {/* Sign out button from Clerk */}
-          <SignOutButton>
-            <button className="w-full text-left rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50 mb-2">
-              Sign out
-            </button>
-          </SignOutButton>
-
-          <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">
-            Back to site
-          </Link>
+            ) : (
+              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M13 4l-6 6 6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </aside>

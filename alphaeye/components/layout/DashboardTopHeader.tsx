@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useUploadDeck } from "../UploadDeckContext"
+import { Bars3Icon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 export default function DashboardTopHeader({
   collapsed,
@@ -27,13 +28,9 @@ export default function DashboardTopHeader({
           >
             {/* simple hamburger / chevron icon that toggles */}
             {collapsed ? (
-              <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fillRule="evenodd" d="M6 4a1 1 0 011.707-.707L12.414 8l-4.707 4.707A1 1 0 116 12.586L8.586 10 6 7.414A1 1 0 016 4z" clipRule="evenodd" />
-              </svg>
+              <ChevronRightIcon className="h-5 w-5 block" aria-hidden />
             ) : (
-              <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path d="M3 5h14a1 1 0 100-2H3a1 1 0 100 2zm14 6H3a1 1 0 100 2h14a1 1 0 100-2zm0 6H3a1 1 0 100 2h14a1 1 0 100-2z" />
-              </svg>
+              <Bars3Icon className="h-5 w-5 block" aria-hidden />
             )}
           </button>
 
