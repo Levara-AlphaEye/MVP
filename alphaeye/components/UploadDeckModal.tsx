@@ -73,14 +73,30 @@ export const UploadDeckModal: React.FC<UploadDeckModalProps> = ({ isOpen, onClos
     }
 
     setIsUploading(true);
-    // TODO: Implement actual upload logic here
-    // For now, just simulate upload
-    setTimeout(() => {
-      setIsUploading(false);
-      setSelectedFile(null);
-      onClose();
-      alert('Deck uploaded successfully!');
-    }, 2000);
+
+    try {
+      const form = new FormData()
+      form.append('file', selectedFile)
+
+      const res = await fetch('/api/uploads', {
+        method: 'POST',
+        body: form,
+      })
+
+      const data = await res.json()
+      if (!res.ok) {
+        setError(data?.error || 'Upload failed')
+      } else {
+        // clear selection and close
+        setSelectedFile(null)
+        onClose()
+      }
+    } catch (e) {
+      console.error(e)
+      setError('Upload failed')
+    } finally {
+      setIsUploading(false)
+    }
   };
 
   return (

@@ -1,5 +1,7 @@
 "use client";
 
+import UploadsList from '../../components/UploadsList';
+
 export default function Dashboard() {
 
   return (
@@ -45,6 +47,13 @@ export default function Dashboard() {
             <h3 className="text-lg font-semibold mb-3">Top Investors</h3>
             <p className="text-gray-600">Placeholder list of potential investors, interests, and notes.</p>
           </div>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold mb-3">My Uploads</h2>
+        <div className="bg-white p-4 rounded border">
+          <UploadsList />
         </div>
       </div>
 
