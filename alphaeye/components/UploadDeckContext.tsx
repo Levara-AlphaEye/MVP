@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { UploadDeckModal } from './UploadDeckModal';
 
 interface UploadDeckContextType {
   isModalOpen: boolean;
@@ -31,6 +32,8 @@ export const UploadDeckProvider: React.FC<UploadDeckProviderProps> = ({ children
   return (
     <UploadDeckContext.Provider value={{ isModalOpen, openModal, closeModal }}>
       {children}
+      {/* Render modal at provider level so it's available on all dashboard pages */}
+      <UploadDeckModal isOpen={isModalOpen} onClose={closeModal} />
     </UploadDeckContext.Provider>
   );
 };

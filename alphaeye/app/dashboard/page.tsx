@@ -1,10 +1,6 @@
-'use client';
-
-import { UploadDeckModal } from '../../components/UploadDeckModal';
-import { useUploadDeck } from '../../components/UploadDeckContext';
+"use client";
 
 export default function Dashboard() {
-  const { isModalOpen, closeModal } = useUploadDeck();
 
   return (
     <div className="space-y-8">
@@ -52,10 +48,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <UploadDeckModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
     </div>
   );
 }
+
